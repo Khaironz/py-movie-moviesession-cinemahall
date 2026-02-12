@@ -11,6 +11,9 @@ def get_movies(
     """
     Returns movies filtered by genres and/or actors.
 
+    If both genres_ids and actors_ids are provided, returns movies that have
+    at least one genre from genres_ids AND at least one actor from actors_ids.
+
     :param genres_ids: List of genre IDs (optional)
     :param actors_ids: List of actor IDs (optional)
     :return: QuerySet of movies
