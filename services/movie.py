@@ -1,22 +1,21 @@
-from typing import Iterable, Optional
-
+from typing import Optional
 from django.db.models import QuerySet
 
 from db.models import Movie
 
 
 def get_movies(
-    genres_ids: Optional[Iterable[int]] = None,
-    actors_ids: Optional[Iterable[int]] = None,
+        genres_ids: Optional[list[int]] = None,
+        actors_ids: Optional[list[int]] = None
 ) -> QuerySet[Movie]:
     """
-    Retorna filmes filtrados por gêneros e/ou atores.
+    Returns movies filtered by genres and/or actors.
 
-    :param genres_ids: Lista de IDs de gêneros (opcional)
-    :param actors_ids: Lista de IDs de atores (opcional)
-    :return: QuerySet de filmes
+    :param genres_ids: List of genre IDs (optional)
+    :param actors_ids: List of actor IDs (optional)
+    :return: QuerySet of movies
     """
-    queryset: QuerySet[Movie] = Movie.objects.all()
+    queryset = Movie.objects.all()
 
     if genres_ids is not None:
         queryset = queryset.filter(genres__id__in=genres_ids)
@@ -29,32 +28,32 @@ def get_movies(
 
 def get_movie_by_id(movie_id: int) -> Movie:
     """
-    Retorna um filme pelo ID.
+    Returns a movie by ID.
 
-    :param movie_id: ID do filme
-    :return: Objeto Movie
+    :param movie_id: Movie ID
+    :return: Movie object
     """
     return Movie.objects.get(id=movie_id)
 
 
 def create_movie(
-    movie_title: str,
-    movie_description: str,
-    genres_ids: Optional[Iterable[int]] = None,
-    actors_ids: Optional[Iterable[int]] = None,
+        movie_title: str,
+        movie_description: str,
+        genres_ids: Optional[list[int]] = None,
+        actors_ids: Optional[list[int]] = None
 ) -> Movie:
     """
-    Cria um novo filme com título, descrição, gêneros e atores.
+    Creates a new movie with title, description, genres and actors.
 
-    :param movie_title: Título do filme
-    :param movie_description: Descrição do filme
-    :param genres_ids: Lista de IDs de gêneros (opcional)
-    :param actors_ids: Lista de IDs de atores (opcional)
-    :return: Objeto Movie criado
+    :param movie_title: Movie title
+    :param movie_description: Movie description
+    :param genres_ids: List of genre IDs (optional)
+    :param actors_ids: List of actor IDs (optional)
+    :return: Created Movie object
     """
-    movie: Movie = Movie.objects.create(
+    movie = Movie.objects.create(
         title=movie_title,
-        description=movie_description,
+        description=movie_description
     )
 
     if genres_ids is not None:
